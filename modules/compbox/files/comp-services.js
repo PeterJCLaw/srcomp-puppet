@@ -1,4 +1,4 @@
-var mainWebsite = 'https://www.studentrobotics.org';
+var mainWebsite = 'https://srobo.mooo.com';
 
 var http = require('http');
 var request = require('request');
