@@ -346,7 +346,7 @@ class compbox {
     initd_service { 'nwatchlive':
         dir     => '/var/www/nwatchlive',
         user    => 'www-data',
-        command => 'node main.js --port=5002 --quiet \
+        command => 'node main.js --port=5002 --quiet --accept-self-signed \
                     /var/www/comp-services.js services.default.js',
         require => File['/usr/local/bin/node'],
         subs    => [Exec['build nwatchlive'],
