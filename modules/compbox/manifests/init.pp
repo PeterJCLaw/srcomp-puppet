@@ -87,6 +87,7 @@ class compbox {
         provider => git,
         source   => "${comp_source}/comp/srcomp-http.git",
         user     => 'srcomp',
+        require  => User['srcomp'],
     }
 
     # The location of the live compstate.

@@ -10,6 +10,7 @@ Vagrant.configure("2") do |config|
     config.vm.hostname = "compbox-2015"
 
     config.ssh.private_key_path = ['~/.vagrant.d/insecure_private_key', '~/.ssh/id_rsa']
+    config.ssh.insert_key = false
 
     config.vm.provision "puppet" do |puppet|
         puppet.manifests_path = "manifests"
