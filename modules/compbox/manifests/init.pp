@@ -1,7 +1,7 @@
 # Install and configure the services running on the compbox
 class compbox {
     $comp_source    = 'git://git.studentrobotics.org'
-    $compstate      = 'https://github.com/srobo/sr2017-comp.git'
+    $compstate      = 'https://github.com/sourcebots/compstate-smallpeice2017.git'
     $compstate_path = '/srv/state'
 
     $track_source = false
@@ -13,7 +13,7 @@ class compbox {
         $vcs_ensure = 'present'
     }
 
-    $hostname = 'compbox-2017.sr'
+    $hostname = 'compbox-2017.sb'
     class { 'hostname':
         hostname    => $hostname,
     }
