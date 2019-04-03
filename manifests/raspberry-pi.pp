@@ -1,7 +1,8 @@
 $configure_main_user_access = true
 $main_user = 'pi'
 $manual_npm_installs = true
-$enable_tls = false
+$redirect_to_tls = false
+$letsencrypt = false
 
 node default {
     include compbox

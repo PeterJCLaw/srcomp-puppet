@@ -195,7 +195,7 @@ class compbox {
     }
 
     # Main webserver
-    package { 'nginx':
+    package { ['nginx', 'ssl-cert']:
         ensure => present
     }
 
@@ -367,9 +367,18 @@ class compbox {
         notify  => Service['nginx']
     }
 
+    file { '/etc/nginx/includes':
+        ensure  => directory,
+        require => Package['nginx'],
+    } ->
+    file { '/etc/nginx/includes/compbox':
+        ensure  => file,
+        source => 'puppet:///modules/compbox/nginx-include.conf',
+        notify  => Service['nginx'],
+    } ->
     file { '/etc/nginx/sites-enabled/compbox':
         ensure  => file,
-        require => Package['nginx'],
+        require => Package['nginx', 'ssl-cert'],
         content => template('compbox/nginx.conf.erb'),
         notify  => Service['nginx']
     }

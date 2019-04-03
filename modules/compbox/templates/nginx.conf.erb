@@ -2,14 +2,18 @@ server {
     listen 80 default_server;
     listen [::]:80 default_server ipv6only=on;
 
-<% if @enable_tls %>
+<% if @redirect_tls %>
     server_name     srcomp.studentrobotics.org;
     return          301 https://$server_name$request_uri;
+<% else %>
+    include includes/compbox;
+<% end %>
 }
 server {
     listen 443 ssl;
     listen [::]:443 ssl ipv6only=on;
 
+<% if @letsencrypt %>
     server_name     srcomp.studentrobotics.org;
 
     ssl_certificate /etc/letsencrypt/live/srcomp.studentrobotics.org/fullchain.pem;
@@ -18,36 +22,10 @@ server {
     ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
 <% else %>
     server_name compbox;
+
+    ssl_certificate /etc/ssl/certs/ssl-cert-snakeoil.pem;
+    ssl_certificate_key /etc/ssl/private/ssl-cert-snakeoil.key;
 <% end %>
 
-    index compbox-index.html;
-    root /var/www/html;
-
-    location / {
-        root /var/www/screens;
-    }
-
-    location = /stream {
-        proxy_pass http://localhost:5001/;
-        proxy_buffering off;
-        proxy_read_timeout 8m;
-    }
-
-    location = /stream/ {
-        return 301 /stream;
-    }
-
-    location = /monitor {
-        return 301 /monitor/;
-    }
-
-    location /monitor/ {
-        proxy_pass http://localhost:5002/;
-        proxy_buffering off;
-        proxy_read_timeout 20m;
-    }
-
-    location /comp-api {
-        proxy_pass http://localhost:5112;
-    }
+    include includes/compbox;
 }
