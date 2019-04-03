@@ -28,4 +28,8 @@ server {
 <% end %>
 
     include includes/compbox;
+
+    location /scorer {
+        proxy_pass http://localhost:5050;
+    }
 }

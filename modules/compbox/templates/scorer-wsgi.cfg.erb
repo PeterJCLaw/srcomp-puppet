@@ -1,0 +1,16 @@
+from sr.comp.scorer import app
+
+from werkzeug.wsgi import DispatcherMiddleware
+
+app.config['COMPSTATE'] = '<%= @compstate_path %>'
+app.config['COMPSTATE_LOCAL'] = True
+app.debug = False
+
+# TODO: configure credentials
+
+app.wsgi_app = DispatcherMiddleware(app.wsgi_app, {
+    '/scorer': app.wsgi_app
+})
+
+bind = '[::]:5050'
+keepalive = 5

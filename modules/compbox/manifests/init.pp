@@ -179,6 +179,12 @@ class compbox {
         source   => "git+${comp_source}/srcomp-cli.git",
         require  => Package['sr.comp']
     }
+    package { 'sr.comp.scorer':
+        ensure   => $vcs_ensure,
+        provider => 'pip',
+        source   => "git+${comp_source}/srcomp-scorer.git@sr2019",
+        require  => Package['sr.comp']
+    }
 
     # Yaml loading acceleration
     package { 'libyaml-dev':
