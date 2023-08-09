@@ -173,7 +173,7 @@ class compbox (
         source   => "git+${comp_source}/srcomp.git"
     } ->
     package { 'sr.comp.http':
-        ensure   => $vcs_ensure,
+        ensure   => 'smallpeice-2023',
         provider => 'pip3',
         source   => "git+${comp_source}/srcomp-http.git"
     }
@@ -211,7 +211,7 @@ class compbox (
         mode   => '0755'
     } ->
     vcsrepo { '/var/www/screens':
-        ensure   => $vcs_ensure,
+        ensure   => 'smallpeice-2023',
         provider => git,
         source   => "${comp_source}/srcomp-screens.git",
         user     => 'www-data'
