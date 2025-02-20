@@ -481,6 +481,10 @@ class compbox (
                 '/etc/nginx/sites-enabled/compbox',
             ],
             notify  => Service['nginx'],
+            post_hook_commands  => [
+                'echo "reloading nginx after certificate renewal"',
+                'systemctl reload nginx',
+            ],
         }
     }
 
