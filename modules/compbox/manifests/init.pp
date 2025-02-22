@@ -358,7 +358,7 @@ class compbox (
     package { 'srcomp_pystream':
         ensure   => $vcs_ensure,
         provider => 'pip3',
-        source   => 'git+https://github.com/WillB97/srcomp-pystream.git'
+        source   => 'git+https://github.com/PeterJCLaw/srcomp-pystream.git@pin-older-setuptools-scm-for-compatibility'
     }
     file { '/var/www/pystream':
         ensure => directory,
