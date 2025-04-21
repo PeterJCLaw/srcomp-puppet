@@ -5,7 +5,7 @@ node default {
         # main_user                 => 'root',
         manual_npm_installs         => false,
         enable_tls                  => true,
-        secondary_domains           => $::fqdn ? {
+        secondary_domains           => $facts['fqdn'] ? {
             'srcomp.studentrobotics.org'    => ['srcomp.srobo.org'],
             default                         => [],
         },

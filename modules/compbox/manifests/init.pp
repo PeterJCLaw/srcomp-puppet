@@ -447,7 +447,7 @@ class compbox (
     }
 
     # Nginx configuration
-    $www_hostname = $::fqdn
+    $www_hostname = $facts['fqdn']
     if $enable_tls {
         package { 'snapd':
             ensure      => present,
@@ -539,7 +539,7 @@ class compbox (
     }
     service { 'sshd':
         ensure  => running,
-        name    => $::osfamily ? {
+        name    => $facts['os']['family'] ? {
             'Debian'  => 'ssh',
             default   => 'sshd',
         },
