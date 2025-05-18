@@ -54,7 +54,7 @@ jobs:
       - run: vagrant --version
 
       - name: Generate SSH key
-        run: ssh-keygen -t ed25519 -C "github-actions@example.com"
+        run: ssh-keygen -t ed25519 -N '' -f ~/.ssh/id_ed25519
 
       - run: vagrant up --provision
 
