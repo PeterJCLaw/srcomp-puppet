@@ -56,6 +56,10 @@ jobs:
       - name: Generate SSH key
         run: ssh-keygen -t ed25519 -N '' -f ~/.ssh/id_ed25519
 
+      - name: Explicitly set network bridge config
+        # Otherwise vagrant asks for this assuming a TTY (despite `--no-tty` :()
+        run: sed -i 's/config.vm.network "public_network"/config.vm.network "public_network", bridge: "eth0"/' Vagrantfile
+
       - run: vagrant up --provision --no-tty
 
       - run: ./scripts/check-pages.py
