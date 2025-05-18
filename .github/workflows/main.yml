@@ -56,6 +56,6 @@ jobs:
       - name: Generate SSH key
         run: ssh-keygen -t ed25519 -N '' -f ~/.ssh/id_ed25519
 
-      - run: vagrant up --provision
+      - run: vagrant up --provision --no-tty
 
       - run: ./scripts/check-pages.py
