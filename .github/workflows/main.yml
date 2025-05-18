@@ -58,7 +58,8 @@ jobs:
 
       - name: Explicitly set network bridge config
         # Otherwise vagrant asks for this assuming a TTY (despite `--no-tty` :()
-        run: sed -i 's/config.vm.network "public_network"/config.vm.network "public_network", bridge: "eth0"/' Vagrantfile
+        run: |
+          sed -i 's/config.vm.network "public_network"/config.vm.network "public_network", bridge: "eth0"/' Vagrantfile
 
       - run: vagrant up --provision --no-tty
 
