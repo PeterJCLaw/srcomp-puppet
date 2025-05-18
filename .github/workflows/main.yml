@@ -48,4 +48,5 @@ jobs:
 
       - run: vagrant up --provision --no-tty
 
+      - run: pip install beautifulsoup4
       - run: ./scripts/check-pages.py
