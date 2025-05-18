@@ -11,29 +11,32 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # Set up vagrant etc.
-      # https://github.com/APN-Pucky/gentoo-prefix-tester/blob/1ecbecb7c14efa92b0899e37f32604eea764bdb7/actions/kvm/action.yml#L34-L54
+      # Derived from https://github.com/APN-Pucky/gentoo-prefix-tester/blob/a80444a9486cde3380556f5125eef2e295a02e18/actions/kvm/action.yml#L35-L71
 
       # https://github.blog/changelog/2024-04-02-github-actions-hardware-accelerated-android-virtualization-now-available/
-      - name: Enable KVM group perms
-        shell: bash
-        run: |
-          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
-          sudo udevadm control --reload-rules
-          sudo udevadm trigger --name-match=kvm
+      # - name: Enable KVM group perms
+      #   shell: bash
+      #   run: |
+      #     echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+      #     sudo udevadm control --reload-rules
+      #     sudo udevadm trigger --name-match=kvm
       # https://github.com/jonashackt/vagrant-travisci-libvrt
       # https://wiki.debian.org/Vagrant
       - name: Install libvirt kvm and Vagrant
         shell: bash
         run: |
+          wget -O - https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+          echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(grep -oP '(?<=UBUNTU_CODENAME=).*' /etc/os-release || lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+
           sudo apt-get update
-          sudo apt-get install -y bridge-utils dnsmasq-base ebtables libvirt-dev qemu-kvm qemu-utils ruby-dev
-          sudo apt-get install -y libvirt-daemon-system vagrant-libvirt libvirt-clients
-          sudo apt-get install -y virtualbox
-          sudo systemctl enable --now libvirtd
-          sudo usermod -a -G kvm $USER
-          sudo usermod -a -G libvirt $USER
-          sudo usermod -a -G libvirt-qemu $USER
-          sudo systemctl restart libvirtd
+          # sudo apt-get install -y bridge-utils dnsmasq-base ebtables libvirt-dev qemu-kvm qemu-utils ruby-dev
+          # sudo apt-get install -y libvirt-daemon-system vagrant-libvirt libvirt-clients
+          sudo apt-get install -y virtualbox vagrant
+          # sudo systemctl enable --now libvirtd
+          # sudo usermod -a -G kvm $USER
+          # sudo usermod -a -G libvirt $USER
+          # sudo usermod -a -G libvirt-qemu $USER
+          # sudo systemctl restart libvirtd
 
       # End set up vagrant etc.
 
