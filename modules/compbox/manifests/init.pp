@@ -167,6 +167,15 @@ class compbox (
                'python3-yaml']:
         ensure => present
     } ->
+    # Ubuntu Jammy ships with pip 22, which doesn't fully support pyproject.toml
+    # build systems. Install the required build tooling so that installs work.
+    # TODO(os-upgrade): delete this once systems ship with a new enough pip
+    # and/or move to using something other than pip to install these packages
+    # (`uv` maybe?)
+    package { 'uv-build':
+        ensure   => 'present',
+        provider => 'pip3',
+    } ->
     package { 'sr.comp':
         ensure   => $vcs_ensure,
         provider => 'pip3',
