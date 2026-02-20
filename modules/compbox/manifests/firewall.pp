@@ -14,41 +14,44 @@ class compbox::firewall {
 
   # SSH
   firewall { '100 allow ssh access':
-    dport  => 22,
-    proto  => tcp,
-    jump   => accept,
+    dport     => 22,
+    proto     => tcp,
+    jump      => accept,
+    protocol  => 'IPv4'
   }
   firewall { '100 allow ssh access (v6)':
     dport     => 22,
     proto     => tcp,
     jump      => accept,
-    protocol  => 'ip6tables',
+    protocol  => 'IPv6',
   }
 
   # NTP
   firewall { '100 allow ntp access':
-    dport  => 123,
-    proto  => udp,
-    jump   => accept,
+    dport     => 123,
+    proto     => udp,
+    jump      => accept,
+    protocol  => 'IPv4'
   }
   firewall { '100 allow ntp access (v6)':
     dport     => 123,
     proto     => udp,
     jump      => accept,
-    protocol  => 'ip6tables',
+    protocol  => 'IPv6',
   }
 
   # HTTP(S)
   firewall { '100 allow http and https access':
-    dport  => [80, 443],
-    proto  => tcp,
-    jump   => accept,
+    dport     => [80, 443],
+    proto     => tcp,
+    jump      => accept,
+    protocol  => 'IPv4'
   }
   firewall { '100 allow http and https access (v6)':
     dport     => [80, 443],
     proto     => tcp,
     jump      => accept,
-    protocol  => 'ip6tables',
+    protocol  => 'IPv6',
   }
 
   # Mythic Beasts
@@ -57,12 +60,13 @@ class compbox::firewall {
     source    => '93.93.128.100',
     proto     => tcp,
     jump      => accept,
+    protocol  => 'IPv4'
   }
   firewall { '200 allow Mythic Beasts’ munin monitoring access (v6)':
     dport     => 4949,
     source    => '2a00:1098:0:80:1000::100',
     proto     => tcp,
     jump      => accept,
-    protocol  => 'ip6tables',
+    protocol  => 'IPv6',
   }
 }
