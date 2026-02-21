@@ -3,14 +3,14 @@
 
 class compbox::hostname ( $hostname = hiera('hostname') ) {
 
-  if $::fqdn != $hostname {
-    host { $::fqdn:
+  if $facts['fqdn'] != $hostname {
+    host { $facts['fqdn']:
       ensure  => absent,
       before  => Exec['hostnamectl'],
     }
 
-    if $::fqdn != $::hostname {
-      host { $::hostname:
+    if $facts['fqdn'] != $facts['hostname'] {
+      host { $facts['hostname']:
         ensure  => absent,
         before  => Exec['hostnamectl'],
       }

@@ -179,16 +179,19 @@ class compbox (
     package { 'sr.comp':
         ensure   => $vcs_ensure,
         provider => 'pip3',
+        install_options => ['--break-system-packages'],
         source   => "git+${comp_source}/srcomp.git"
     } ->
     package { 'sr.comp.http':
         ensure   => $vcs_ensure,
         provider => 'pip3',
+        install_options => ['--break-system-packages'],
         source   => "git+${comp_source}/srcomp-http.git"
     }
     package { 'sr.comp.cli':
         ensure   => $vcs_ensure,
         provider => 'pip3',
+        install_options => ['--break-system-packages'],
         source   => "git+${comp_source}/srcomp-cli.git",
         require  => Package['sr.comp']
     }
@@ -367,6 +370,7 @@ class compbox (
     package { 'srcomp_pystream':
         ensure   => $vcs_ensure,
         provider => 'pip3',
+        install_options => ['--break-system-packages'],
         source   => 'git+https://github.com/WillB97/srcomp-pystream.git'
     }
     file { '/var/www/pystream':
@@ -397,6 +401,7 @@ class compbox (
     package { 'gunicorn':
         ensure   => present,
         provider => 'pip3',
+        install_options => ['--break-system-packages'],
         require  => Package['python3-pip']
     }
     $compapi_logging_ini = '/var/www/srcomp-http-logging.ini'
@@ -456,7 +461,7 @@ class compbox (
     }
 
     # Nginx configuration
-    $www_hostname = $::fqdn
+    $www_hostname = $facts['fqdn']
     if $enable_tls {
         package { 'snapd':
             ensure      => present,
@@ -548,7 +553,7 @@ class compbox (
     }
     service { 'sshd':
         ensure  => running,
-        name    => $::osfamily ? {
+        name    => $facts['os']['family'] ? {
             'Debian'  => 'ssh',
             default   => 'sshd',
         },
